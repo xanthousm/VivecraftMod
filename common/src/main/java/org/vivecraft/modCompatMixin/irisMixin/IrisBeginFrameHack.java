@@ -14,10 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 })
 public class IrisBeginFrameHack {
 
-    @Inject(method = "beginFrame", at = @At("HEAD"), cancellable = true, remap = false)
+    /*@Inject(method = "beginFrame", at = @At("HEAD"), cancellable = true, remap = false)
     private void cancelShadows(CallbackInfo ci) {
         if (!ClientDataHolder.getInstance().isFirstPass) {
             ci.cancel();
         }
-    }
+    }*/
 }
