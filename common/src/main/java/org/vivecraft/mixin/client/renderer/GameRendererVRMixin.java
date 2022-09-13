@@ -2350,7 +2350,7 @@ public abstract class GameRendererVRMixin
 //			SmartAnimations.spriteRendered(textureatlassprite);
 //		}
 
-		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, textureatlassprite.atlas().location());
 		float f = textureatlassprite.getU0();
 		float f1 = textureatlassprite.getU1();
@@ -2374,11 +2374,11 @@ public abstract class GameRendererVRMixin
 					(float) i * 90.0F - GameRendererVRMixin.DATA_HOLDER.vrPlayer.vrdata_world_render.getBodyYaw()));
 			posestack.translate(0.0D, (double) (-f13), 0.0D);
 			Matrix4f matrix4f = posestack.last().pose();
-			bufferbuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
-			bufferbuilder.vertex(matrix4f, -f12, 0.0F, -f12).color(1.0F, 1.0F, 1.0F, 0.9F).uv(f8, f10).endVertex();
-			bufferbuilder.vertex(matrix4f, f12, 0.0F, -f12).color(1.0F, 1.0F, 1.0F, 0.9F).uv(f7, f10).endVertex();
-			bufferbuilder.vertex(matrix4f, f12, f13, -f12).color(1.0F, 1.0F, 1.0F, 0.9F).uv(f7, f9).endVertex();
-			bufferbuilder.vertex(matrix4f, -f12, f13, -f12).color(1.0F, 1.0F, 1.0F, 0.9F).uv(f8, f9).endVertex();
+			bufferbuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+			bufferbuilder.vertex(matrix4f, -f12, 0.0F, -f12).uv(f8, f10).color(1.0F, 1.0F, 1.0F, 0.9F).endVertex();
+			bufferbuilder.vertex(matrix4f, f12, 0.0F, -f12).uv(f7, f10).color(1.0F, 1.0F, 1.0F, 0.9F).endVertex();
+			bufferbuilder.vertex(matrix4f, f12, f13, -f12).uv(f7, f9).color(1.0F, 1.0F, 1.0F, 0.9F).endVertex();
+			bufferbuilder.vertex(matrix4f, -f12, f13, -f12).uv(f8, f9).color(1.0F, 1.0F, 1.0F, 0.9F).endVertex();
 			bufferbuilder.end();
 			BufferUploader.end(bufferbuilder);
 			posestack.popPose();
