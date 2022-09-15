@@ -205,6 +205,9 @@ public class VRPlayer
         }
 
         float f4 = f1 * par1 + f2 * (1.0F - par1);
+        if(dataholder.vrSettings.worldRotationIncrement != 0.0F && par1<0.75){
+            f4 = f2;//don't smooth out snap turn start
+        }
         Vec3 vec3 = new Vec3(this.vrdata_world_pre.origin.x + (this.vrdata_world_post.origin.x - this.vrdata_world_pre.origin.x) * (double)par1, this.vrdata_world_pre.origin.y + (this.vrdata_world_post.origin.y - this.vrdata_world_pre.origin.y) * (double)par1, this.vrdata_world_pre.origin.z + (this.vrdata_world_post.origin.z - this.vrdata_world_pre.origin.z) * (double)par1);
         this.vrdata_world_render = new VRData(vec3, dataholder.vrSettings.walkMultiplier, f, f4);
 
