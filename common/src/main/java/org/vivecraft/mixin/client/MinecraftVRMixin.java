@@ -1226,6 +1226,8 @@ public abstract class MinecraftVRMixin extends ReentrantBlockableEventLoop<Runna
 		} else {
 			float xcrop = 0.0F;
 			float ycrop = 0.0F;
+			int screenW = this.window.getScreenWidth();
+			int screenH = this.window.getScreenHeight();
 			boolean ar = false;
 			RenderTarget source = ClientDataHolder.getInstance().vrRenderer.framebufferEye0;
 
@@ -1235,14 +1237,14 @@ public abstract class MinecraftVRMixin extends ReentrantBlockableEventLoop<Runna
 				source = ClientDataHolder.getInstance().vrRenderer.framebufferMR;
 			} else if (ClientDataHolder.getInstance().vrSettings.displayMirrorMode == VRSettings.MirrorMode.SINGLE
 					|| ClientDataHolder.getInstance().vrSettings.displayMirrorMode == VRSettings.MirrorMode.OFF) {
+				ar = true;
+				if(screenW>screenH){ screenW=screenH; }
+				else{ screenH=screenW; }
 				if (!ClientDataHolder.getInstance().vrSettings.displayMirrorLeftEye)
 					source = ClientDataHolder.getInstance().vrRenderer.framebufferEye1;
 			} else if (ClientDataHolder.getInstance().vrSettings.displayMirrorMode == VRSettings.MirrorMode.CROPPED) {
 				if (!ClientDataHolder.getInstance().vrSettings.displayMirrorLeftEye)
 					source = ClientDataHolder.getInstance().vrRenderer.framebufferEye1;
-
-				xcrop = 0.15F;
-				ycrop = 0.15F;
 				ar = true;
 			}
 			// Debug
@@ -1250,8 +1252,8 @@ public abstract class MinecraftVRMixin extends ReentrantBlockableEventLoop<Runna
 			// source = DataHolder.getInstance().vrRenderer.telescopeFramebufferR;
 			//
 			if (source != null) {
-				((RenderTargetExtension) source).blitToScreen(0, this.window.getScreenWidth(),
-						this.window.getScreenHeight(), 0, true, xcrop, ycrop, ar);
+				((RenderTargetExtension) source).blitToScreen(0, screenW,
+						screenH, 0, true, xcrop, ycrop, ar);
 			}
 		}
 	}
