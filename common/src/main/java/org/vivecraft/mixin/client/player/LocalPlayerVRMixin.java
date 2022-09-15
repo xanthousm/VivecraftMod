@@ -253,6 +253,9 @@ public abstract class LocalPlayerVRMixin extends AbstractClientPlayer implements
 				|| this.getPose() == Pose.SWIMMING && !ClientDataHolder.getInstance().crawlTracker.crawlsteresis) {
 			d0 = -1.2D;
 		}
+		else if (this.getPose() == Pose.CROUCHING && !ClientDataHolder.getInstance().sneakTracker.sneakOverride){
+			d0 = -0.6D;
+		}
 
 		return d0;
 	}
