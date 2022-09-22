@@ -17,12 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Pseudo
 @Mixin(NewWorldRenderingPipeline.class)
 public class IrisNewWorldRenderingPipelineVRMixin {
-    /*@Inject(method = "renderShadows", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = "renderShadows", at = @At("HEAD"), cancellable = true, remap = false)
     private void cancelShadows(LevelRendererAccessor par1, Camera par2, CallbackInfo ci) {
      if (!ClientDataHolder.getInstance().isFirstPass) {
             ci.cancel();
         }
-    }*/
+    }
 
     @Redirect(method = "beginLevelRendering", remap = false, at = @At(value = "INVOKE", target = "Lnet/coderbot/iris/uniforms/FrameUpdateNotifier;onNewFrame()V"))
     private void no(FrameUpdateNotifier instance) {
