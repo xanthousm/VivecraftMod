@@ -1240,8 +1240,8 @@ public abstract class MinecraftVRMixin extends ReentrantBlockableEventLoop<Runna
 				if (!ClientDataHolder.getInstance().vrSettings.displayMirrorLeftEye)
 					source = ClientDataHolder.getInstance().vrRenderer.framebufferEye1;
 
-				xcrop = 0.15F;
-				ycrop = 0.15F;
+				//xcrop = 0.15F;
+				//ycrop = 0.15F;
 				ar = true;
 			}
 			// Debug

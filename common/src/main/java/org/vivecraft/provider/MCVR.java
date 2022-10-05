@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;
 import org.vivecraft.ClientDataHolder;
@@ -108,6 +110,7 @@ public abstract class MCVR
     protected float hmdForwardYaw;
     public boolean ignorePressesNextFrame = false;
     protected int quickTorchPreviousSlot;
+    public int turnDelay = 0;
     protected Map<String, VRInputAction> inputActions = new HashMap<>();
     protected Map<String, VRInputAction> inputActionsByKeyBinding = new HashMap<>();
     protected Set<KeyMapping> vanillaBindingSet;
@@ -1050,7 +1053,7 @@ public abstract class MCVR
                     this.dh.vrSettings.worldRotation %= 360.0F;
                 }
             }
-            else if (this.keyRotateAxis.consumeClick() || this.keyFreeMoveRotate.consumeClick())
+            else //if (this.keyRotateAxis.consumeClick() || this.keyFreeMoveRotate.consumeClick())
             {
                 float f5 = this.getInputAction(this.keyRotateAxis).getAxis2D(false).getX();
 
@@ -1061,8 +1064,20 @@ public abstract class MCVR
 
                 if (Math.abs(f5) > 0.5F)
                 {
-                    this.dh.vrSettings.worldRotation -= this.dh.vrSettings.worldRotationIncrement * Math.signum(f5);
-                    this.dh.vrSettings.worldRotation %= 360.0F;
+                    //this.dh.vrSettings.worldRotation -= this.dh.vrSettings.worldRotationIncrement * Math.signum(f5);
+                    //this.dh.vrSettings.worldRotation %= 360.0F;
+                    if(turnDelay==0) {
+                        this.dh.vrSettings.worldRotation -= this.dh.vrSettings.worldRotationIncrement * Math.signum(f5);
+                        this.dh.vrSettings.worldRotation %= 360.0F;
+                        this.mc.level.playLocalSound(this.mc.player.position().x(), this.mc.player.position().y(), this.mc.player.position().z(), SoundEvents.WOOL_STEP, SoundSource.NEUTRAL, 0.5F, 0.1F, false);
+                        turnDelay = 7;
+                    }
+                    else{
+                        --turnDelay;
+                    }
+                }
+                else if (Math.abs(f5) < 0.3F){
+                    turnDelay=0;
                 }
             }
 
@@ -1087,6 +1102,7 @@ public abstract class MCVR
             {
                 this.dh.vrSettings.worldRotation += this.dh.vrSettings.worldRotationIncrement;
                 this.dh.vrSettings.worldRotation %= 360.0F;
+                this.mc.level.playLocalSound(this.mc.player.position().x(), this.mc.player.position().y(), this.mc.player.position().z(), SoundEvents.WOOL_STEP, SoundSource.NEUTRAL, 0.5F, 0.1F, false);
             }
 
             if (this.dh.vrSettings.worldRotationIncrement == 0.0F)
@@ -1110,6 +1126,7 @@ public abstract class MCVR
             {
                 this.dh.vrSettings.worldRotation -= this.dh.vrSettings.worldRotationIncrement;
                 this.dh.vrSettings.worldRotation %= 360.0F;
+                this.mc.level.playLocalSound(this.mc.player.position().x(), this.mc.player.position().y(), this.mc.player.position().z(), SoundEvents.WOOL_STEP, SoundSource.NEUTRAL, 0.5F, 0.1F, false);
             }
 
             this.seatedRot = this.dh.vrSettings.worldRotation;

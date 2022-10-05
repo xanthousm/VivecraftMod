@@ -434,10 +434,10 @@ public abstract class GameRendererVRMixin
 		this.setupOverlayStatus(pPartialTicks);
 	}
 
-	@Inject(at = @At("HEAD"), method = "bobHurt", cancellable = true)
+	/*@Inject(at = @At("HEAD"), method = "bobHurt", cancellable = true)
 	public void removeBobHurt(PoseStack poseStack, float f, CallbackInfo ci) {
 		ci.cancel();
-	}
+	}*/
 
 	@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"), method = "renderLevel")
 	public void removeBobView(GameRenderer instance, PoseStack poseStack, float f) {
